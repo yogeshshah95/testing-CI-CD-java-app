@@ -6,19 +6,45 @@ steps:
 
   # Step 2: Build Docker image with a custom tag
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/my-app:latest', '.'] # Use 'latest' as the image tag
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/my-app:$IMAGE_TAG', '.'] # Use 'latest' or specified image tag
 
   # Step 3: Push the Docker image to Google Container Registry (GCR)
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/my-app:latest'] # Push the image tagged with 'latest'
+    args: ['push', 'gcr.io/$PROJECT_ID/my-app:$IMAGE_TAG'] # Push the image tagged with 'latest'
 
-  # Step 4: Deploy to Kubernetes using kubectl
+  # Step 4: Set GKE environment variables for Cloud Build
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'config'
+      - 'set'
+      - 'compute/region'
+      - 'us-central1-f'  # Replace with your region
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'config'
+      - 'set'
+      - 'compute/zone'
+      - 'us-central1-f'  # Replace with your zone
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'container'
+      - 'clusters'
+      - 'get-credentials'
+      - 'x2'  # Replace with your cluster name
+      - '--zone'
+      - 'us-central1-a'  # Replace with your zone
+      - '--region'
+      - 'us-central1'  # Replace with your region
+
+  # Step 5: Deploy to Kubernetes using kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'deployment.yaml']
 
 # Define the image output (this will be uploaded to GCR)
 images:
-  - 'gcr.io/$PROJECT_ID/my-app:latest'
+  - 'gcr.io/$PROJECT_ID/my-app:$IMAGE_TAG'
 
 substitutions:
   _IMAGE_TAG: 'latest'
