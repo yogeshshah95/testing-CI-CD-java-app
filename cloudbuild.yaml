@@ -27,9 +27,7 @@ steps:
       - 'get-credentials'
       - 'x2'  # Replace with your cluster name
       - '--zone'
-      - 'us-central1-a'  # Replace with your zone
-      - '--region'
-      - 'us-central1'  # Replace with your region
+      - 'us-central1-f'  # Replace with your zone
 
   # Step 5: Deploy to Kubernetes using kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
