@@ -17,13 +17,6 @@ steps:
     args:
       - 'config'
       - 'set'
-      - 'compute/region'
-      - 'us-central1-f'  # Replace with your region
-
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'config'
-      - 'set'
       - 'compute/zone'
       - 'us-central1-f'  # Replace with your zone
 
