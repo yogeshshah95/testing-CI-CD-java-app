@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment
+  namespace: test-ws  # Define the namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-app
+          image: gcr.io/marketcheck-gcp/my-app:latest
+          command: [ "java" ]  # Command to run
+          args: [ "-Xmx50m", "-jar", "/app.jar" ]
+          resources:
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
+      nodeSelector:
+        nodeType: par  # Define node selector
+      tolerations:
+        - key: type
+          operator: Equal
+          value: par
+          effect: NoSchedule
