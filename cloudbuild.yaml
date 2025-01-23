@@ -12,14 +12,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/my-app:latest']  # Push the image tagged with 'latest'
 
-  # Step 4: Set GKE environment variables for Cloud Build
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'config'
-      - 'set'
-      - 'compute/zone'
-      - 'us-central1-f'  # Replace with your zone
-
+  # Step 4: Authenticate and configure Kubernetes cluster
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'container'
@@ -27,7 +20,10 @@ steps:
       - 'get-credentials'
       - 'x2'  # Replace with your cluster name
       - '--zone'
-      - 'us-central1-f'  # Replace with your zone
+      - 'us-central1-f'  # Replace with your cluster's zone
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'  # Optional: Ensures zone is set
+      - 'CLOUDSDK_CONTAINER_CLUSTER=x2'       # Optional: Ensures cluster name is set
 
   # Step 5: Deploy to Kubernetes using kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
