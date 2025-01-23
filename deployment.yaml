@@ -24,7 +24,7 @@ spec:
             limits:
               memory: "100Mi"
               cpu: "100m"
-      imagePullPolicy: Always
+          imagePullPolicy: Always
       nodeSelector:
         nodeType: par  # Define node selector
       tolerations:
