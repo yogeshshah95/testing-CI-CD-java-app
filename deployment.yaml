@@ -5,6 +5,8 @@ metadata:
   namespace: test-ws  # Define the namespace
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: my-app
@@ -22,6 +24,7 @@ spec:
             limits:
               memory: "100Mi"
               cpu: "100m"
+      imagePullPolicy: Always
       nodeSelector:
         nodeType: par  # Define node selector
       tolerations:
