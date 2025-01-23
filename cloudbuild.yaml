@@ -27,6 +27,10 @@ steps:
   # Step 5: Deploy to Kubernetes using kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'deployment.yaml']
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'    # Set cluster region
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'    # Set cluster zone
+      - 'CLOUDSDK_CONTAINER_CLUSTER=x2'          # Set cluster name
 
 # Define the image output (this will be uploaded to GCR)
 images:
