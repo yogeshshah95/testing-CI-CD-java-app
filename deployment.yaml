@@ -19,7 +19,7 @@ spec:
         - name: my-app
           image: gcr.io/marketcheck-gcp/my-app:latest
           command: [ "java" ]  # Command to run
-          args: [ "-Xmx50m", "-jar", "/usr/service/local/SimpleJavaProject-1.0-SNAPSHOT-jar-with-dependencies.jar" ]
+          args: [ "-Xmx50m", "-jar", "/usr/service/local/SimpleJavaProject-1.0-SNAPSHOT.jar" ]
           resources:
             limits:
               memory: "100Mi"
