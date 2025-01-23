@@ -19,7 +19,10 @@ steps:
       - 'clusters'
       - 'get-credentials'
       - 'x2'  # Replace with your cluster name
-      - '--zone=us-central1-f'  # Specify the cluster's zone directly
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'    # Set cluster region
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'    # Set cluster zone
+      - 'CLOUDSDK_CONTAINER_CLUSTER=x2'          # Set cluster name
 
   # Step 5: Deploy to Kubernetes using kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
