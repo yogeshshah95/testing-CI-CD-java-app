@@ -33,7 +33,7 @@ steps:
 
   # Step 5: Deploy to Kubernetes using kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['apply', '-f', '/workspace/deployment-files/full_parser_deployment.yaml']
+    args: ['apply', '-f', '/workspace/deployment-files/deployment.yaml']
     env:
       #- 'CLOUDSDK_COMPUTE_REGION=us-central1'    # Set cluster region
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'    # Set cluster zone
