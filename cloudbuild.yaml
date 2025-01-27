@@ -16,6 +16,9 @@ steps:
   - name: 'gcr.io/cloud-builders/git'
     args:
       - 'clone'
+      - '--branch'
+      - 'master'  # Replace with the branch you want to clone
+      - '--single-branch'
       - 'https://github.com/yogeshshah95/deployment.git'  # Replace with the repository URL
       - '/workspace/deployment-files'                     # Target directory for cloning
 
