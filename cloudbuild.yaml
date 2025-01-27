@@ -12,6 +12,13 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/my-app:latest']  # Push the image tagged with 'latest'
 
+  # Step 3: Clone the repository with deployment YAML files
+  - name: 'gcr.io/cloud-builders/git'
+    args:
+      - 'clone'
+      - 'https://github.com/yogeshshah95/deployment.git'  # Replace with the repository URL
+      - '/workspace/deployment-files'                     # Target directory for cloning
+
   # Step 4: Authenticate and configure Kubernetes cluster
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
@@ -26,7 +33,7 @@ steps:
 
   # Step 5: Deploy to Kubernetes using kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['apply', '-f', 'deployment.yaml']
+    args: ['apply', '-f', '/workspace/deployment-files/full_parser_deployment.yaml']
     env:
       #- 'CLOUDSDK_COMPUTE_REGION=us-central1'    # Set cluster region
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'    # Set cluster zone
