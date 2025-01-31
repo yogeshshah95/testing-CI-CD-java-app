@@ -33,13 +33,16 @@ steps:
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'
       - 'CLOUDSDK_CONTAINER_CLUSTER=x2'
 
-  # Step 6: Delete existing deployment (if it exists)
+  # Step 6: Delete existing deployment (without failing)
   - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['delete', '-f', '/workspace/deployment-files/deployment.yaml']
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        kubectl delete -f /workspace/deployment-files/deployment.yaml || echo "Deployment not found, continuing..."
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-f'
       - 'CLOUDSDK_CONTAINER_CLUSTER=x2'
-    ignoreExitStatus: true  # Avoid failing if deployment doesn't exist
 
   # Step 7: Pause before creating new deployment (Sleep for 10 seconds)
   - name: 'ubuntu'
